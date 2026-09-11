@@ -26,31 +26,28 @@ A solução da SquadTech consiste em uma plataforma centralizada de gerenciament
 
 ## 🗃️ Backlog do Produto 
 <a id="backlog"></a>
-| Prioridade | User Story | Estimativa |
-|---|---|---:|
-| Alta | Como gestor, quero um framework que faça operações geoespaciais (reprojeção, validação/dissolução de geometria, cálculo de área) para padronizar e facilitar a realização dos cálculos de cada indicador | 8 |
-| Alta | Como gestor, quero separar os dados em categorias de quarentena, bruta, tratada e publicada para garantir que os dados usados foram revisados e sem erros | 8 |
-| Alta | Como analista, quero consultar o IRL do imóvel, para avaliar sua conformidade com a Reserva Legal | 3 |
-| Alta | Como analista, quero consultar o ISAP do imóvel, para avaliar sua conformidade com unidades de conservação, terras indígenas, quilombolas e florestas públicas | 8 |
-| Alta | Como analista, quero consultar o IAE do imóvel, para avaliar sua conformidade com embargos ambientais | 3 |
-| Alta | Como gestor, quero cadastrar fontes de dados, gerenciar os dados e as estruturas de armazenamento para assegurar o tratamento dos dados | 8 |
-| Alta | Como gestor, quero garantir que resultados de indicadores validados possam ser publicados, sem possibilidade de alteração, para manter a integridade e versionamento deles | 8 |
-| Alta | Como auditor, quero visualizar as fontes e conjuntos utilizados, cálculos e regras aplicadas num resultado para garantir sua integridade | 5 |
-| Média | Como administrador, quero separar níveis de acesso e ações por tipos de usuários para assegurar a integridade do sistema | 8 |
-| Média | Como auditor, quero comparar duas versões publicadas de um mesmo indicador para identificar o que mudou entre elas | 5 |
-| Média | Como usuário do sistema, quero uma forma de autenticação do sistema para garantir o progresso do meu trabalho e identificação | 5 |
-| Média | Como analista, quero ter acesso aos dados vigentes do sistema por API para conseguir fazer consultas aos dados de forma independente ao portal web | 5 |
-| Média | Como analista, quero visualizar quais são as fontes e conjuntos cadastrados no sistema para julgar o estado dos dados vindos da fonte ou conjunto | 5 |
-| Média | Como utilizador dos dados, quero que os dados da API venham em formato CSV, JSON e GeoJSON para utilizá-los em outras aplicações sem a necessidade de tratar os dados | 3 |
-| Média | Como gestor, quero pipelines de dados para configurá-los no Airflow | 8 |
-| Média | Como analista, quero consultar o IFC do imóvel, para identificar regiões com focos de incêndios | 5 |
-| Média | Como gestor, quero criar indicadores customizados para reaproveitar e ampliar a atuação da aplicação | 8 |
-| Baixa | Como analista, quero visualizar e extrair os dados via portal web ou API para levantar análises dos dados adquiridos | 5 |
-| Baixa | Como gestor, quero garantir a segurança do acesso a API com chave de acesso, histórico de injeções e requisições para monitorar por quem e como a API é acessada | 8 |
-| Baixa | Como analista, quero consultar o ICV do imóvel, para monitorar seu estado ambiental ao longo do tempo | 3 |
-| Baixa | Como analista, quero consultar o IAPP do imóvel, para monitorar seu estado ambiental ao longo do tempo | 5 |
-| Baixa | Como analista, quero consultar o IDesmat do imóvel, para monitorar seu estado ambiental ao longo do tempo | 5 |
 
+| Rank | Prioridade | User Story | Estimativa | Sprint |
+|------|------------|------------|------------|--------|
+| 1 | Alta | Como gestor, quero uma ferramenta que faça operações geoespaciais (reprojeção, validação/dissolução de geometria, cálculo de área) para padronizar e facilitar a realização dos cálculos de cada indicador | 8 | 1 |
+| 2 | Alta | Como gestor, quero armazenar os dados em categorias de bruta, quarentena, tratada e publicada para garantir que os dados usados foram revisados e tratados de antemão | 13 | 1 |
+| 3 | Alta | Como analista, quero consultar o IRL do imóvel, para avaliar sua conformidade com a Reserva Legal | 3 | 1 |
+| 4 | Alta | Como analista, quero consultar o ISAP do imóvel, para avaliar sua conformidade com unidades de conservação, terras indígenas, quilombolas e florestas públicas | 8 | 1 |
+| 5 | Alta | Como analista, quero consultar o IAE do imóvel, para avaliar sua conformidade com a embargos ambientais | 3 | 1 |
+| 6 | Alta | Como gestor, quero garantir que resultados de indicadores validados possam ser publicados, sem possibilidade de alteração, para manter a integridade e versionamento deles | 11 | 1 |
+| 7 | Alta | Como auditor, quero visualizar as fontes e conjuntos utilizados, cálculos e regras aplicadas num resultado para garantir sua integridade | 5 | 1 |
+| 8 | Alta | Como gestor, quero cadastrar fontes de dados para assegurar a formação de indicadores | 5 | 1 |
+| 9 | Média | Como administrador, quero separar o sistema por níveis de acesso e ações entre tipos de usuários (administrador, operador de dados, gestor, analista e auditor) para assegurar a integridade do sistema | 5 | 2 |
+| 10 | Média | Como auditor, quero comparar duas versões publicadas de um mesmo indicador para identificar o que mudou entre elas | 5 | 2 |
+| 11 | Média | Como analista, quero ter acesso aos dados vigentes do sistema por API para conseguir fazer consultas aos dados de forma independente ao portal web | 5 | 2 |
+| 12 | Média | Como utilizador dos dados, quero que os dados da API venham em formato CSV, JSON e GeoJSON para utilizá-lo em outras aplicações sem a necessidade de tratar os dados | 3 | 2 |
+| 13 | Média | Como gestor, quero pipelines de dados para configurá-los no Airflow | 8 | 3 |
+| 14 | Média | Como analista, quero consultar o IFC do imóvel, para identificar regiões com focos de incêndios | 5 | 3 |
+| 15 | Baixa | Como gestor, quero garantir a segurança do acesso a API com chave de acesso, histórico de injeções e requisições para monitorar por quem e como a API é acessada | 11 | 3 |
+| 16 | Baixa | Como analista, quero consultar o ICV do imóvel, para monitorar seu estado ambiental ao longo do tempo | 3 | 3 |
+| 17 | Baixa | Como analista, quero consultar o IAPP do imóvel, para monitorar seu estado ambiental ao longo do tempo | 5 | 3 |
+| 18 | Baixa | Como analista, quero consultar o IDesmat do imóvel, para monitorar seu estado ambiental ao longo do tempo | 5 | 3 |
+| 19 | Baixa | Como gestor, quero criar indicadores customizados para reaproveitar e ampliar a atuação da aplicação | 11 | 3 |
 
 
 ##  🗓️ Cronograma das Sprints <a id="sprint"></a>
@@ -58,9 +55,9 @@ A solução da SquadTech consiste em uma plataforma centralizada de gerenciament
 
 |   Sprint    | Início |  Fim  | Documentação | Status | 
 | :---------: | :----: | :---: | :----------: | :----: |
-| Sprint 1 | 07/09  | 27/09 |  [Sprint 1](./Documentacao/Processo/Sprints/Sprint1/README.md)           |  Em Andamento ⚙️|
-| Sprint 2 | 05/10  | 25/10 |  [Sprint 2](./Documentacao/Processo/Sprints/Sprint2/README.md)           |  Em Planejamento 📝|
-| Sprint 3 | 02/10  | 22/11 |  [Sprint 3](./Documentacao/Processo/Sprints/Sprint3/README.md)           |  Em Planejamento 📝|
+| Sprint 1 | 07/09  | 27/09 |  [Sprint 1](./Documentacao/Processo/Sprints/Sprint_1/README.md)           |  Em Andamento ⚙️|
+| Sprint 2 | 05/10  | 25/10 |  [Sprint 2](./Documentacao/Processo/Sprints/Sprint_2/README.md)           |  Em Planejamento 📝|
+| Sprint 3 | 02/10  | 22/11 |  [Sprint 3](./Documentacao/Processo/Sprints/Sprint_3/README.md)           |  Em Planejamento 📝|
 
 ---
 ## ⚙️ Tecnologias
