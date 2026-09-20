@@ -86,8 +86,8 @@ A solução da SquadTech consiste em uma plataforma centralizada de gerenciament
 
 ## 💾 Documentação <a id="docs"></a>
 <a id="docs"></a>
-- 🏁 DoD — Definition of Done
-- 📋 DoR — Definition of Ready
+- 🏁[DoD — Definition of Done](./Documentacao/Processo/Sprints/DoD_DoR.md)
+- 📋[DoR — Definition of Ready](./Documentacao/Processo/Sprints/DoD_DoR.md)
 - 🌿 Estratégia de Branch
 - 📝 Estratégia de Commits
 - 📖 Manual do Usuário
