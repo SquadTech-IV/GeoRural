@@ -1,9 +1,4 @@
-## 🎯Meta da Sprint
-
-Aplicação capaz de fazer o cálculo e visualização apropriada do indicador IRL com o tratamento de dados vindos de fontes seletas para usá-los em cálculos. As fontes poderão ser cadastradas diretamente e o banco de dados hospedado em cloud. User Stories: US01, US02 e US03
-
-
-## Sprint backlog
+## 🗃️ Sprint backlog
 
 | Rank | Prioridade | User Story | Estimativa | Sprint | ID |
 |------|------------|------------|------------|--------|----|
@@ -16,7 +11,13 @@ Aplicação capaz de fazer o cálculo e visualização apropriada do indicador I
 | 7 | Alta | Como auditor, quero visualizar as fontes e conjuntos utilizados, cálculos e regras aplicadas num resultado para garantir sua integridade | 5 | 1 | US07 |
 | 8 | Alta | Como gestor, quero cadastrar fontes de dados para assegurar a formação de indicadores | 5 | 1 | US08 |
 
-## DoD
+## 🎯 Meta da Sprint
+
+Aplicação capaz de fazer o cálculo e visualização apropriada do indicador IRL com o tratamento de dados vindos de fontes seletas para usá-los em cálculos. As fontes poderão ser cadastradas diretamente e o banco de dados hospedado em cloud. User Stories: US01, US02 e US03
+
+
+
+## 🏁 DoD
 
 ### US01
 - Reprojeta qualquer geometria de entrada para uma projeção equivalente (equal-area) adequada ao território do Paraná, antes de qualquer cálculo de área;
@@ -70,7 +71,7 @@ Aplicação capaz de fazer o cálculo e visualização apropriada do indicador I
 - Sistema registra o autor do cadastro e data;
 - Gestor visualiza e organiza as quatro zonas do GeoDataLake (bruta, tratada, publicada, quarentena) associadas a cada conjunto.
 
-## DoR
+## 📋 DoR
 
 - Título, descrição e objetivos claros
 - Valor agregado ao cliente
