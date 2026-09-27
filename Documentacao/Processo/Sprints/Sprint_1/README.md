@@ -2,11 +2,11 @@
 
 | Rank | Prioridade | User Story | Estimativa | Sprint | ID |
 |------|------------|------------|------------|--------|----|
-| 1 | Alta | Como gestor, quero uma ferramenta que faça operações geoespaciais (reprojeção, validação/dissolução de geometria, cálculo de área) para padronizar e facilitar a realização dos cálculos de cada indicador | 8 | 1 | US01 |
-| 2 | Alta | Como gestor, quero armazenar os dados em categorias de bruta, quarentena, tratada e publicada para garantir que os dados usados foram revisados e tratados de antemão | 13 | 1 | US02 |
-| 3 | Alta | Como analista, quero consultar o IRL do imóvel, para avaliar sua conformidade com a Reserva Legal | 3 | 1 | US03 |
-| 4 | Alta | Como analista, quero consultar o ISAP do imóvel, para avaliar sua conformidade com unidades de conservação, terras indígenas, quilombolas e florestas públicas | 8 | 1 | US04 |
-| 5 | Alta | Como analista, quero consultar o IAE do imóvel, para avaliar sua conformidade com a embargos ambientais | 3 | 1 | US05 |
+| 1 | Alta | Como operador de dados, quero que o sistema calcule corretamente as áreas e as medidas dos imóveis de forma padronizada, para que todos os indicadores sejam gerados com precisão e da mesma maneira | 8 | 1 | US01 |
+| 2 | Alta | Como operador de dados, quero enviar os dados de um imóvel — em um único arquivo ou em vários — para que o sistema calcule seus indicadores e os disponibilize para consulta. | 13 | 1 | US02 |
+| 3 | Alta |  Como operador de dados, quero gerar os indicadores a partir dos dados brutos já armazenados, para transformar as informações coletadas em resultados prontos para análise. | 3 | 1 | US03 |
+| 4 | Alta | Como analista, quero saber quanto de mata nativa um imóvel preserva em relação ao mínimo exigido por lei (indicador IRL), para avaliar se ele está regular quanto à Reserva Legal. | 8 | 1 | US04 |
+| 5 | Alta | Como analista, quero ver os imóveis e seus resultados em um mapa, para entender a situação de cada um visualmente e apresentá-la com clareza. | 3 | 1 | US05 |
 | 6 | Alta | Como gestor, quero garantir que resultados de indicadores validados possam ser publicados, sem possibilidade de alteração, para manter a integridade e versionamento deles | 11 | 1 | US06 |
 | 7 | Alta | Como auditor, quero visualizar as fontes e conjuntos utilizados, cálculos e regras aplicadas num resultado para garantir sua integridade | 5 | 1 | US07 |
 | 8 | Alta | Como gestor, quero cadastrar fontes de dados para assegurar a formação de indicadores | 5 | 1 | US08 |
