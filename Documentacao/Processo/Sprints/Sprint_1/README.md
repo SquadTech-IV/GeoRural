@@ -13,7 +13,7 @@
 
 ## 🎯 Meta da Sprint
 
-Aplicação capaz de fazer o cálculo e visualização apropriada do indicador IRL com o tratamento de dados vindos de fontes seletas para usá-los em cálculos. As fontes poderão ser cadastradas diretamente e o banco de dados hospedado em cloud. User Stories: US01, US02 e US03
+Aplicação capaz de fazer o cálculo e visualização apropriada do indicador IAE com o tratamento de dados vindos de fontes seletas para usá-los em cálculos. As fontes poderão ser cadastradas diretamente e o banco de dados hospedado em cloud. User Stories: US01, US02 e US03
 
 
 
