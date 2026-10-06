@@ -55,8 +55,8 @@ A solução da SquadTech consiste em uma plataforma centralizada de gerenciament
 
 |   Sprint    | Início |  Fim  | Documentação | Status | 
 | :---------: | :----: | :---: | :----------: | :----: |
-| Sprint 1 | 07/09  | 27/09 |  [Sprint 1](./Documentacao/Processo/Sprints/Sprint_1/README.md)           |  Em Andamento ⚙️|
-| Sprint 2 | 05/10  | 25/10 |  [Sprint 2](./Documentacao/Processo/Sprints/Sprint_2/README.md)           |  Em Planejamento 📝|
+| Sprint 1 | 07/09  | 27/09 |  [Sprint 1](./Documentacao/Processo/Sprints/Sprint_1/README.md)           |  Concluida ✔️|
+| Sprint 2 | 05/10  | 25/10 |  [Sprint 2](./Documentacao/Processo/Sprints/Sprint_2/README.md)           |  Em Andamento ⚙️|
 | Sprint 3 | 02/10  | 22/11 |  [Sprint 3](./Documentacao/Processo/Sprints/Sprint_3/README.md)           |  Em Planejamento 📝|
 
 ---

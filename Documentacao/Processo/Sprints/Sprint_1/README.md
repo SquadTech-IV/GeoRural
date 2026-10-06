@@ -77,3 +77,18 @@ Aplicação capaz de fazer o cálculo e visualização apropriada do indicador I
 - Valor agregado ao cliente
 - Critérios de aceitação definidos
 - Estimativa, prioridade e rank estabelecidos junto com a equipe
+
+## Burndown
+<img width="977" height="563" alt="WhatsApp Image 2026-09-27 at 04 52 21" src="https://github.com/user-attachments/assets/39bdd7cc-602f-4306-a281-dcc52b3a9e78" />
+
+## Video
+
+https://github.com/user-attachments/assets/34adf808-1428-478c-ba86-c9703e4c41f4
+
+
+
+
+
+
+
+
