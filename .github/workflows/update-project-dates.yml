@@ -1,0 +1,314 @@
+name: Update Project Dates
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-dates:
+    runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+      OWNER: SquadTech-IV
+      REPO: GeoRural
+      PROJECT_NUMBER: 1
+
+    steps:
+      - name: Check project items
+        shell: bash
+        run: |
+
+          echo "========================================="
+          echo "GeoRural - Atualização das datas"
+          echo "========================================="
+
+          TODAY=$(date -u +"%Y-%m-%d")
+
+          echo "Data atual: $TODAY"
+
+          QUERY='
+          query(
+            $owner: String!,
+            $repo: String!,
+            $number: Int!
+          ) {
+            repository(owner: $owner, name: $repo) {
+              projectV2(number: $number) {
+
+                id
+                title
+
+                fields(first: 50) {
+                  nodes {
+
+                    ... on ProjectV2Field {
+                      id
+                      name
+                    }
+
+                    ... on ProjectV2SingleSelectField {
+                      id
+                      name
+                      options {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+
+                items(first: 100) {
+                  nodes {
+
+                    id
+
+                    content {
+                      ... on Issue {
+                        number
+                        title
+                      }
+                    }
+
+                    fieldValues(first: 50) {
+                      nodes {
+
+                        ... on ProjectV2ItemFieldSingleSelectValue {
+                          name
+                          optionId
+                          field {
+                            ... on ProjectV2SingleSelectField {
+                              name
+                            }
+                          }
+                        }
+
+                        ... on ProjectV2ItemFieldDateValue {
+                          date
+                          field {
+                            ... on ProjectV2Field {
+                              name
+                            }
+                          }
+                        }
+
+                      }
+                    }
+
+                  }
+                }
+
+              }
+            }
+          }
+          '
+
+          echo "Consultando Project..."
+
+          RESPONSE=$(gh api graphql \
+            -f query="$QUERY" \
+            -f owner="$OWNER" \
+            -f repo="$REPO" \
+            -F number="$PROJECT_NUMBER")
+
+          echo "$RESPONSE" > project.json
+
+          echo "Project encontrado."
+
+          PROJECT_ID=$(jq -r '.data.repository.projectV2.id' project.json)
+
+          echo "PROJECT_ID: $PROJECT_ID"
+
+          START_FIELD_ID=$(jq -r '
+            .data.repository.projectV2.fields.nodes[]
+            | select(.name == "Data de início")
+            | .id
+          ' project.json)
+
+          END_FIELD_ID=$(jq -r '
+            .data.repository.projectV2.fields.nodes[]
+            | select(.name == "Data de conclusão")
+            | .id
+          ' project.json)
+
+          echo "START_FIELD_ID: $START_FIELD_ID"
+          echo "END_FIELD_ID: $END_FIELD_ID"
+
+          if [ "$START_FIELD_ID" = "null" ] || [ -z "$START_FIELD_ID" ]; then
+            echo "ERRO: campo 'Data de início' não encontrado."
+            exit 1
+          fi
+
+          if [ "$END_FIELD_ID" = "null" ] || [ -z "$END_FIELD_ID" ]; then
+            echo "ERRO: campo 'Data de conclusão' não encontrado."
+            exit 1
+          fi
+
+          echo ""
+          echo "Processando itens..."
+          echo ""
+
+          jq -c '
+            .data.repository.projectV2.items.nodes[]
+          ' project.json |
+          while read -r ITEM; do
+
+            ITEM_ID=$(echo "$ITEM" | jq -r '.id')
+
+            ISSUE_NUMBER=$(echo "$ITEM" | jq -r '
+              .content.number // empty
+            ')
+
+            ISSUE_TITLE=$(echo "$ITEM" | jq -r '
+              .content.title // empty
+            ')
+
+            if [ -z "$ISSUE_NUMBER" ]; then
+              continue
+            fi
+
+            STATUS=$(echo "$ITEM" | jq -r '
+              [
+                .fieldValues.nodes[]
+                | select(
+                    .field.name == "Status"
+                  )
+                | .name
+              ][0] // ""
+            ')
+
+            START_DATE=$(echo "$ITEM" | jq -r '
+              [
+                .fieldValues.nodes[]
+                | select(
+                    .field.name == "Data de início"
+                  )
+                | .date
+              ][0] // ""
+            ')
+
+            END_DATE=$(echo "$ITEM" | jq -r '
+              [
+                .fieldValues.nodes[]
+                | select(
+                    .field.name == "Data de conclusão"
+                  )
+                | .date
+              ][0] // ""
+            ')
+
+            echo "-----------------------------------------"
+            echo "Issue: #$ISSUE_NUMBER - $ISSUE_TITLE"
+            echo "Status: $STATUS"
+            echo "Data início: $START_DATE"
+            echo "Data conclusão: $END_DATE"
+
+            # =========================================
+            # EM PROGRESSO
+            # =========================================
+
+            if [ "$STATUS" = "EM PROGRESSO" ]; then
+
+              if [ -z "$START_DATE" ]; then
+
+                echo "Definindo Data de início: $TODAY"
+
+                gh api graphql \
+                  -f query='
+                    mutation(
+                      $project: ID!,
+                      $item: ID!,
+                      $field: ID!,
+                      $date: Date!
+                    ) {
+                      updateProjectV2ItemFieldValue(
+                        input: {
+                          projectId: $project
+                          itemId: $item
+                          fieldId: $field
+                          value: {
+                            date: $date
+                          }
+                        }
+                      ) {
+                        projectV2Item {
+                          id
+                        }
+                      }
+                    }
+                  ' \
+                  -f project="$PROJECT_ID" \
+                  -f item="$ITEM_ID" \
+                  -f field="$START_FIELD_ID" \
+                  -f date="$TODAY"
+
+                echo "Data de início atualizada."
+
+              else
+
+                echo "Data de início já existe. Não será alterada."
+
+              fi
+
+            fi
+
+            # =========================================
+            # CONCLUÍDO
+            # =========================================
+
+            if [ "$STATUS" = "CONCLUÍDO" ]; then
+
+              if [ -z "$END_DATE" ]; then
+
+                echo "Definindo Data de conclusão: $TODAY"
+
+                gh api graphql \
+                  -f query='
+                    mutation(
+                      $project: ID!,
+                      $item: ID!,
+                      $field: ID!,
+                      $date: Date!
+                    ) {
+                      updateProjectV2ItemFieldValue(
+                        input: {
+                          projectId: $project
+                          itemId: $item
+                          fieldId: $field
+                          value: {
+                            date: $date
+                          }
+                        }
+                      ) {
+                        projectV2Item {
+                          id
+                        }
+                      }
+                    }
+                  ' \
+                  -f project="$PROJECT_ID" \
+                  -f item="$ITEM_ID" \
+                  -f field="$END_FIELD_ID" \
+                  -f date="$TODAY"
+
+                echo "Data de conclusão atualizada."
+
+              else
+
+                echo "Data de conclusão já existe. Não será alterada."
+
+              fi
+
+            fi
+
+          done
+
+          echo ""
+          echo "========================================="
+          echo "Processamento concluído."
+          echo "========================================="
