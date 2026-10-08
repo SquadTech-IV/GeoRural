@@ -172,19 +172,16 @@ jobs:
                 echo "=> Preenchendo Data de Inicio: $TODAY"
 
                 gh api graphql \
-                  -f query='
-                    mutation(
-                      $projectId: ID!,
-                      $itemId: ID!,
-                      $fieldId: ID!,
-                      $value: ProjectV2FieldValue!
-                    ) {
+                  -f query="
+                    mutation {
                       updateProjectV2ItemFieldValue(
                         input: {
-                          projectId: $projectId
-                          itemId: $itemId
-                          fieldId: $fieldId
-                          value: $value
+                          projectId: \"$PROJECT_ID\"
+                          itemId: \"$ITEM_ID\"
+                          fieldId: \"$START_DATE_FIELD_ID\"
+                          value: {
+                            date: \"$TODAY\"
+                          }
                         }
                       ) {
                         projectV2Item {
@@ -192,11 +189,7 @@ jobs:
                         }
                       }
                     }
-                  ' \
-                  -F projectId="$PROJECT_ID" \
-                  -F itemId="$ITEM_ID" \
-                  -F fieldId="$START_DATE_FIELD_ID" \
-                  -F value='{"date":"'"$TODAY"'"}'
+                  "
 
                 echo "Data de Inicio atualizada."
 
@@ -220,19 +213,16 @@ jobs:
                 echo "=> Preenchendo Data de Conclusão: $TODAY"
 
                 gh api graphql \
-                  -f query='
-                    mutation(
-                      $projectId: ID!,
-                      $itemId: ID!,
-                      $fieldId: ID!,
-                      $value: ProjectV2FieldValue!
-                    ) {
+                  -f query="
+                    mutation {
                       updateProjectV2ItemFieldValue(
                         input: {
-                          projectId: $projectId
-                          itemId: $itemId
-                          fieldId: $fieldId
-                          value: $value
+                          projectId: \"$PROJECT_ID\"
+                          itemId: \"$ITEM_ID\"
+                          fieldId: \"$END_DATE_FIELD_ID\"
+                          value: {
+                            date: \"$TODAY\"
+                          }
                         }
                       ) {
                         projectV2Item {
@@ -240,11 +230,7 @@ jobs:
                         }
                       }
                     }
-                  ' \
-                  -F projectId="$PROJECT_ID" \
-                  -F itemId="$ITEM_ID" \
-                  -F fieldId="$END_DATE_FIELD_ID" \
-                  -F value='{"date":"'"$TODAY"'" }'
+                  "
 
                 echo "Data de Conclusão atualizada."
 
