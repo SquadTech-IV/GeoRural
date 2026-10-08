@@ -2,8 +2,7 @@ name: Close Sub-issues
 
 on:
   issues:
-    types:
-      - closed
+    types: [closed]
 
 permissions:
   issues: write
@@ -13,23 +12,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Close all sub-issues
+      - name: Close sub-issues
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PARENT_ISSUE: ${{ github.event.issue.number }}
         run: |
-          echo "Issue pai fechada: #$ISSUE_NUMBER"
+          echo "========================================="
+          echo "Issue pai fechada: #$PARENT_ISSUE"
+          echo "Repositório: $REPO"
+          echo "========================================="
 
-          subissues=$(gh api \
+          echo "Buscando sub-issues..."
+
+          SUBISSUES=$(gh api \
+            --method GET \
             -H "Accept: application/vnd.github+json" \
-            "/repos/$REPO/issues/$ISSUE_NUMBER/sub_issues" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "/repos/$REPO/issues/$PARENT_ISSUE/sub_issues" \
             --jq '.[] | select(.state == "open") | .number')
 
-          for issue in $subissues; do
-            echo "Fechando sub-issue #$issue"
+          if [ -z "$SUBISSUES" ]; then
+            echo "Nenhuma sub-issue aberta encontrada."
+            exit 0
+          fi
 
-            gh issue close "$issue" \
-              --repo "$REPO" \
-              --comment "Fechada automaticamente porque a issue pai #$ISSUE_NUMBER foi encerrada."
+          echo "Sub-issues abertas encontradas:"
+          echo "$SUBISSUES"
+
+          for ISSUE in $SUBISSUES; do
+            echo ""
+            echo "Fechando sub-issue #$ISSUE..."
+
+            gh api \
+              --method PATCH \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/repos/$REPO/issues/$ISSUE" \
+              -f state='closed'
+
+            echo "Sub-issue #$ISSUE fechada com sucesso."
           done
+
+          echo ""
+          echo "========================================="
+          echo "Processo concluído."
+          echo "========================================="
