@@ -1,63 +1,265 @@
-name: List Project Fields
+name: Atualizar Datas do Project
 
 on:
+  schedule:
+    - cron: "*/5 * * * *"
+
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  list-fields:
+  update-dates:
     runs-on: ubuntu-latest
 
     env:
       GH_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 
+      OWNER: SquadTech-IV
+      PROJECT_NUMBER: 1
+
+      STATUS_FIELD_ID: PVTSSF_lADOE2Bqwc4BjnxmzhibaMc
+      STATUS_IN_PROGRESS: 47fc9ee4
+      STATUS_DONE: 98236657
+
+      START_DATE_FIELD_ID: PVTF_lADOE2Bqwc4BjnxmzhicrMw
+      END_DATE_FIELD_ID: PVTF_lADOE2Bqwc4BjnxmzhicrZw
+
     steps:
-      - name: List Project fields
+      - name: Atualizar datas do Project
+        shell: bash
         run: |
 
-          echo "========================================="
-          echo "CAMPOS DO PROJECT GEORURAL"
-          echo "========================================="
+          set -e
 
-          gh api graphql \
+          TODAY=$(date -u +"%Y-%m-%d")
+
+          echo "========================================="
+          echo "GeoRural - Atualização das datas"
+          echo "========================================="
+          echo "Data atual: $TODAY"
+          echo ""
+
+          echo "Consultando Project..."
+
+          PROJECT=$(gh api graphql \
             -f query='
-              query {
-                organization(login: "SquadTech-IV") {
-                  projectV2(number: 1) {
-
+              query(
+                $owner: String!,
+                $number: Int!
+              ) {
+                organization(login: $owner) {
+                  projectV2(number: $number) {
                     id
-                    number
                     title
 
-                    fields(first: 50) {
+                    items(first: 100) {
                       nodes {
+                        id
 
-                        __typename
+                        content {
+                          ... on Issue {
+                            number
+                            title
+                            state
+                          }
 
-                        ... on ProjectV2Field {
-                          id
-                          name
-                        }
-
-                        ... on ProjectV2SingleSelectField {
-                          id
-                          name
-                          options {
-                            id
-                            name
+                          ... on PullRequest {
+                            number
+                            title
+                            state
                           }
                         }
 
-                        ... on ProjectV2IterationField {
-                          id
-                          name
-                        }
+                        fieldValues(first: 50) {
+                          nodes {
 
+                            ... on ProjectV2ItemFieldSingleSelectValue {
+                              field {
+                                ... on ProjectV2SingleSelectField {
+                                  id
+                                  name
+                                }
+                              }
+                              optionId
+                              name
+                            }
+
+                            ... on ProjectV2ItemFieldDateValue {
+                              field {
+                                ... on ProjectV2Field {
+                                  id
+                                  name
+                                }
+                              }
+                              date
+                            }
+
+                          }
+                        }
                       }
                     }
                   }
                 }
               }
-            '
+            ' \
+            -F owner="$OWNER" \
+            -F number="$PROJECT_NUMBER")
+
+          PROJECT_ID=$(echo "$PROJECT" | jq -r \
+            '.data.organization.projectV2.id')
+
+          echo "Project ID: $PROJECT_ID"
+          echo ""
+
+          if [ "$PROJECT_ID" = "null" ] || [ -z "$PROJECT_ID" ]; then
+            echo "ERRO: Project não encontrado."
+            exit 1
+          fi
+
+          echo "Processando itens..."
+          echo ""
+
+          echo "$PROJECT" | jq -c \
+            '.data.organization.projectV2.items.nodes[]' |
+          while read -r ITEM; do
+
+            ITEM_ID=$(echo "$ITEM" | jq -r '.id')
+
+            ISSUE_NUMBER=$(echo "$ITEM" | jq -r \
+              '.content.number // empty')
+
+            ISSUE_TITLE=$(echo "$ITEM" | jq -r \
+              '.content.title // empty')
+
+            if [ -z "$ISSUE_NUMBER" ]; then
+              continue
+            fi
+
+            STATUS_OPTION=$(echo "$ITEM" | jq -r \
+              --arg FIELD_ID "$STATUS_FIELD_ID" \
+              '.fieldValues.nodes[]
+               | select(.field.id == $FIELD_ID)
+               | .optionId // empty')
+
+            START_DATE=$(echo "$ITEM" | jq -r \
+              --arg FIELD_ID "$START_DATE_FIELD_ID" \
+              '.fieldValues.nodes[]
+               | select(.field.id == $FIELD_ID)
+               | .date // empty')
+
+            END_DATE=$(echo "$ITEM" | jq -r \
+              --arg FIELD_ID "$END_DATE_FIELD_ID" \
+              '.fieldValues.nodes[]
+               | select(.field.id == $FIELD_ID)
+               | .date // empty')
+
+            echo "-----------------------------------------"
+            echo "Issue #$ISSUE_NUMBER - $ISSUE_TITLE"
+            echo "Status: $STATUS_OPTION"
+            echo "Data de início: ${START_DATE:-vazia}"
+            echo "Data de conclusão: ${END_DATE:-vazia}"
+
+            # =========================================
+            # EM PROGRESSO
+            # =========================================
+
+            if [ "$STATUS_OPTION" = "$STATUS_IN_PROGRESS" ]; then
+
+              if [ -z "$START_DATE" ]; then
+
+                echo "=> Preenchendo Data de Inicio: $TODAY"
+
+                gh api graphql \
+                  -f query='
+                    mutation(
+                      $projectId: ID!,
+                      $itemId: ID!,
+                      $fieldId: ID!,
+                      $value: ProjectV2FieldValue!
+                    ) {
+                      updateProjectV2ItemFieldValue(
+                        input: {
+                          projectId: $projectId
+                          itemId: $itemId
+                          fieldId: $fieldId
+                          value: $value
+                        }
+                      ) {
+                        projectV2Item {
+                          id
+                        }
+                      }
+                    }
+                  ' \
+                  -F projectId="$PROJECT_ID" \
+                  -F itemId="$ITEM_ID" \
+                  -F fieldId="$START_DATE_FIELD_ID" \
+                  -f value="{\"date\":\"$TODAY\"}"
+
+                echo "Data de Inicio atualizada."
+
+              else
+
+                echo "=> Data de Inicio já preenchida."
+                echo "=> Nenhuma alteração."
+
+              fi
+
+            fi
+
+            # =========================================
+            # CONCLUÍDO
+            # =========================================
+
+            if [ "$STATUS_OPTION" = "$STATUS_DONE" ]; then
+
+              if [ -z "$END_DATE" ]; then
+
+                echo "=> Preenchendo Data de Conclusão: $TODAY"
+
+                gh api graphql \
+                  -f query='
+                    mutation(
+                      $projectId: ID!,
+                      $itemId: ID!,
+                      $fieldId: ID!,
+                      $value: ProjectV2FieldValue!
+                    ) {
+                      updateProjectV2ItemFieldValue(
+                        input: {
+                          projectId: $projectId
+                          itemId: $itemId
+                          fieldId: $fieldId
+                          value: $value
+                        }
+                      ) {
+                        projectV2Item {
+                          id
+                        }
+                      }
+                    }
+                  ' \
+                  -F projectId="$PROJECT_ID" \
+                  -F itemId="$ITEM_ID" \
+                  -F fieldId="$END_DATE_FIELD_ID" \
+                  -f value="{\"date\":\"$TODAY\"}"
+
+                echo "Data de Conclusão atualizada."
+
+              else
+
+                echo "=> Data de Conclusão já preenchida."
+                echo "=> Nenhuma alteração."
+
+              fi
+
+            fi
+
+          done
+
+          echo ""
+          echo "========================================="
+          echo "Processamento concluído."
+          echo "========================================="
