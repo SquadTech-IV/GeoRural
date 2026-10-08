@@ -90,7 +90,8 @@ A solução da SquadTech consiste em uma plataforma centralizada de gerenciament
 - 📋[DoR — Definition of Ready](./Documentacao/Processo/Sprints/DoD_DoR.md)
 - 🌿[Estratégia de Branch](./Documentacao/Estratégia_de_Branches.md)
 - 📝[Padrões de Commits](./Documentacao/Padrões_de_Commits.md)
-- 📖 Manual do Usuário
+- 📚​[Configuração de Ambiente](./Documentacao/Configuração_de_Ambiente.md)
+- 📖[Manual do Usuário](./Documentacao/Manual_do_Usuario.md)
 
 
 ## 👥 Equipe
