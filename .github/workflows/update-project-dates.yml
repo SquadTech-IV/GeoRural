@@ -196,7 +196,7 @@ jobs:
                   -F projectId="$PROJECT_ID" \
                   -F itemId="$ITEM_ID" \
                   -F fieldId="$START_DATE_FIELD_ID" \
-                  -f value="{\"date\":\"$TODAY\"}"
+                  -F value='{"date":"'"$TODAY"'"}'
 
                 echo "Data de Inicio atualizada."
 
@@ -244,7 +244,7 @@ jobs:
                   -F projectId="$PROJECT_ID" \
                   -F itemId="$ITEM_ID" \
                   -F fieldId="$END_DATE_FIELD_ID" \
-                  -f value="{\"date\":\"$TODAY\"}"
+                  -F value='{"date":"'"$TODAY"'" }'
 
                 echo "Data de Conclusão atualizada."
 
