@@ -1,0 +1,35 @@
+name: Close Sub-issues
+
+on:
+  issues:
+    types:
+      - closed
+
+permissions:
+  issues: write
+
+jobs:
+  close-subissues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Close all sub-issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          echo "Issue pai fechada: #$ISSUE_NUMBER"
+
+          subissues=$(gh api \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/$REPO/issues/$ISSUE_NUMBER/sub_issues" \
+            --jq '.[] | select(.state == "open") | .number')
+
+          for issue in $subissues; do
+            echo "Fechando sub-issue #$issue"
+
+            gh issue close "$issue" \
+              --repo "$REPO" \
+              --comment "Fechada automaticamente porque a issue pai #$ISSUE_NUMBER foi encerrada."
+          done
