@@ -62,6 +62,7 @@ A solução da SquadTech consiste em uma plataforma centralizada de gerenciament
 | US#28  | 31       | Como operador de dados, quero acompanhar no portal um resumo da operação (conjuntos publicados, execuções concluídas, registros em quarentena e duração média) e a lista de execuções do pipeline, para identificar falhas rapidamente sem precisar abrir o Airflow.                                                                                             | MÉDIA          | 5 | 3 |
 | US#30  | 32       | Como administrador, quero acompanhar no portal os logs, o estado de saúde e o consumo de recursos dos componentes (portal, API, banco e Airflow), para agir antes que uma falha deixe a plataforma indisponível.                                                                                                                                                 | BAIXA          | 5              | 3 |
 | US#31  | 33       | Como administrador, quero cadastrar, editar e desativar usuários e alterar seus perfis pelo portal, para controlar quem tem acesso à plataforma sem mexer diretamente no banco de dados. | BAIXA          | 3              | 3  |
+| US#34 | 34 | Como operador de dados, quero cadastrar arquivos em lote para agilizar o processo de upload dos dados. | BAIXA | 5 | 3 |
 
 
 ##  🗓️ Cronograma das Sprints <a id="sprint"></a>
