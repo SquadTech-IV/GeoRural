@@ -1,0 +1,7 @@
+[submodule "GeoRural-BackEnd"]
+    path = GeoRural-BackEnd
+    url = https://github.com/SquadTech-IV/GeoRural-BackEnd.git
+
+[submodule "GeoRural-FrontEnd"]
+    path = GeoRural-FrontEnd
+    url = https://github.com/SquadTech-IV/GeoRural-FrontEnd.git

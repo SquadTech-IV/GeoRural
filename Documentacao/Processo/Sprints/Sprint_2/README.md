@@ -166,3 +166,6 @@ A aplicação deve ser capaz de realizar o tratamento adequado dos dados, preser
 - Valor agregado ao cliente
 - Critérios de aceitação definidos
 - Estimativa, prioridade e rank estabelecidos junto com a equipe
+
+## Burndown
+<img width="1027" height="592" alt="image" src="https://github.com/user-attachments/assets/6ee5f26e-1fb8-40a5-9d43-9028a80ec41d" />
