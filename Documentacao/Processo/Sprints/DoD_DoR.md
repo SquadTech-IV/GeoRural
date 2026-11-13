@@ -365,7 +365,7 @@
 
 ---
 
-## US#34
+### US#34
 
 **Como operador de dados, quero cadastrar arquivos em lote para agilizar o processo de upload dos dados.**
 
@@ -375,7 +375,36 @@
 
 # 📋 DoR — Definition of Ready
 
-- Título, descrição e objetivos claros
-- Valor agregado ao cliente
-- Critérios de aceitação definidos
-- Estimativa, prioridade e rank estabelecidos junto com a equipe
+## 📝Sprint 1
+1. **Clareza e Escopo:** Título, descrição e objetivo de negócio bem definidos, com escopo dimensionado para ser concluído dentro da Sprint.
+2. **Critérios de Aceitação:** Cenários de sucesso e erro claramente descritos para upload de arquivos `.zip`, reprocessamento de dados já armazenados e exibição no mapa.
+3. **Padrões Cartográficos e Fórmulas:**
+   * Sistema de Referência de Coordenadas (SRC) e projeção cartográfica definidos para garantir o cálculo padronizado de áreas e medidas.
+   * Regra de sobreposição e fórmula do indicador IAE (embargos ambientais federais em hectares e percentual) documentadas.
+4. **Massa de Dados de Teste:** Arquivos reais de amostra (pacote `.zip` do CAR e camada de embargos ambientais) disponíveis para validar o processamento e a visualização.
+5. **Interface e Integração:** Protótipos das telas de upload, listagem e mapa aprovados, com o contrato básico de comunicação entre frontend e backend alinhado.
+6. **Estimativa e Prioridade:** Esforço estimado, prioridade e ordem de execução definidos em conjunto com a equipe.
+
+---
+## 📝Sprint 2
+1. **Clareza e Escopo:** Título padronizado, descrição objetiva e valor para o usuário (Operador, Gestor ou Auditor) bem definidos, com tamanho adequado para a Sprint.
+2. **Regras de Validação e Quarentena:** Critérios objetivos de reprovação (campos obrigatórios, tipos, duplicidades, geometrias inválidas) e formato de registro dos motivos na quarentena especificados.
+3. **Regras de Tratamento e Recorte:**
+   * Camada oficial do limite do Paraná disponível, e regras de dissolução de geometrias e padronização de atributos definidas.
+   * Fórmula e parâmetros do indicador IRL documentados.
+4. **Rastreabilidade e Governança:**
+   * Padrão de cadastro de fontes (CAR, IBGE, INPE, IBAMA), geração de impressão digital dos arquivos brutos e registro da trajetória entre zonas (bruta → quarentena → tratada) definidos.
+   * Regras de imutabilidade das versões publicadas e vínculo de linhagem até os arquivos e parâmetros de origem especificadas.
+5. **Interface e Estrutura de Dados:** Protótipos das telas de quarentena, catálogo de fontes e publicação aprovados, e modelagem do banco de dados pronta para suportar o versionamento.
+6. **Estimativa e Prioridade:** Esforço estimado, prioridade e ordem de execução definidos em conjunto com a equipe.
+
+---
+## 📝Sprint 3
+1. **Clareza e Escopo:** Título padronizado, descrição sem ambiguidades e objetivo claro para cada perfil de usuário, sem dependências bloqueantes de entregas anteriores.
+2. **Fórmulas e Marcos Temporais dos Indicadores:** Regras de cálculo, unidades de medida e datas de corte documentadas para ICV, IAPP, ISAP, IDesmat e IFC.
+3. **Orquestração e Fontes Externas:**
+   * Sequência das etapas do pipeline no Airflow (recebimento → validação → tratamento → cálculo → qualidade → publicação) e regras de reexecução parcial definidas.
+4. **Segurança, Infraestrutura e Integração:**
+   * Ambiente em nuvem acessível e especificações da API e exportação (CSV, JSON, GeoJSON) definidas.
+5. **Interface de Dashboards e Monitoramento:** Protótipos das telas de filtros, gráficos, comparação entre versões e painéis operacionais aprovados.
+6. **Estimativa e Prioridade:** Esforço estimado, prioridade e ordem de execução definidos em conjunto com a equipe.
