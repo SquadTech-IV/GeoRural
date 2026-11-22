@@ -213,3 +213,4 @@ A aplicação deve ser capaz de demonstrar o cálculo correto de todos os indica
 - Estimativa, prioridade e rank estabelecidos junto com a equipe
 
 ## Burndown
+<img width="1097" height="657" alt="image" src="https://github.com/user-attachments/assets/d5bcd227-16e7-4196-8b5c-91e8b4929b25" />
